@@ -85,4 +85,5 @@ const authMutations = {
   }
 };
 
-module.exports = { authQueries, authMutations };
+exports.authQueries = authQueries;
+exports.authMutations = authMutations;

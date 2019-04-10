@@ -15,6 +15,7 @@ const app = express();
 // Allow cross-origin requests
 app.use(cors());
 
+// Auth middleware that checks JWTs
 app.use(
   expressJWT({
     secret: "supersecretawesomecode",
@@ -35,6 +36,7 @@ server.applyMiddleware({ app, bodyParser });
 
 const PORT = process.env.PORT || 4000;
 
+// Connect MongoDB
 mongoose
   .connect(
     `mongodb+srv://${process.env.MONGO_USER}:${

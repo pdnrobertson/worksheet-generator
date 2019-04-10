@@ -41,7 +41,6 @@ const typeDefs = gql`
   }
 
   type Query {
-    hello: String
     login(email: String!, password: String!): AuthPayload
     getCurrentUser: TeacherUser
   }
