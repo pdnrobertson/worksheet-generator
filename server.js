@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const { ApolloServer } = require("apollo-server-express");
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
 const expressJWT = require("express-jwt");
 const cors = require("cors");
 

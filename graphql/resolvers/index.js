@@ -5,8 +5,33 @@ const jwt = require("jsonwebtoken");
 // GraphQL Resolvers
 const resolvers = {
   Query: {
-    hello: () => {
-      return "Hello World";
+    login: async (_, args) => {
+      const { email, password } = args;
+
+      try {
+        const user = await TeacherUser.findOne({ email });
+        if (!user) {
+          throw new Error("User not found.");
+        }
+
+        const isEqual = bcrypt.compare(password, user.password);
+        if (!isEqual) {
+          throw new Error("Password incorrect.");
+        }
+
+        const token = jwt.sign(
+          { id: user.id, email: user.email },
+          "supersecretawesomecode",
+          { expiresIn: "1d" }
+        );
+
+        return {
+          token,
+          user
+        };
+      } catch (err) {
+        throw err;
+      }
     }
   },
 

@@ -37,6 +37,7 @@ const typeDefs = gql`
 
   type Query {
     hello: String
+    login(email: String!, password: String!): AuthPayload
   }
 
   type Mutation {
