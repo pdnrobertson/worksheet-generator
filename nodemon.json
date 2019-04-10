@@ -1,0 +1,8 @@
+{
+  "env": {
+    "MONGO_USER": "patrick",
+    "MONGO_PASSWORD": "iP4ULuXMxGKH4SGt",
+    "MONGO_DB": "worksheet-generator-dev",
+    "JWT_SECRET": "supersecretawesomecode"
+  }
+}
