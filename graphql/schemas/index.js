@@ -37,7 +37,7 @@ const typeDefs = gql`
 
   type AuthPayload {
     token: String
-    user: TeacherUser
+    userId: String
   }
 
   type Query {
@@ -46,7 +46,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    signup(teacherUserInput: TeacherUserInput): AuthPayload
+    signup(signupInput: TeacherUserInput): AuthPayload
     createClassroom(classroomInput: ClassroomInput): Classroom
   }
 `;

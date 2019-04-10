@@ -34,9 +34,11 @@ const authQueries = {
         { expiresIn: "1d" }
       );
 
+      const userId = user.id;
+
       return {
         token,
-        user
+        userId
       };
     } catch (err) {
       throw err;
@@ -46,13 +48,7 @@ const authQueries = {
 
 const authMutations = {
   signup: async (_, args) => {
-    const {
-      firstName,
-      lastName,
-      email,
-      school,
-      password
-    } = args.teacherUserInput;
+    const { firstName, lastName, email, school, password } = args.signupInput;
 
     try {
       const teacherUser = await TeacherUser.findOne({ email });
@@ -81,7 +77,12 @@ const authMutations = {
         "supersecretawesomecode"
       );
 
-      return { token, user: savedTeacherUser };
+      const userId = savedTeacherUser._id;
+
+      return {
+        token,
+        userId
+      };
     } catch (err) {
       throw err;
     }
