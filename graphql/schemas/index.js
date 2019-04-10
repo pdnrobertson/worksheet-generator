@@ -13,21 +13,26 @@ const typeDefs = gql`
     classrooms: [Classroom!]
   }
 
-  type Classroom {
-    _id: ID!
-    name: String!
-    year_level: String!
-    subject: String!
-    teacher: TeacherUser!
-    numOfStudents: Int!
-  }
-
   input TeacherUserInput {
     firstName: String!
     lastName: String!
     email: String!
     school: String!
     password: String!
+  }
+
+  type Classroom {
+    _id: ID!
+    name: String!
+    year_level: String!
+    subject: String
+    teacher: TeacherUser!
+    numOfStudents: Int!
+  }
+
+  input ClassroomInput {
+    name: String!
+    year_level: String!
   }
 
   type AuthPayload {
@@ -38,10 +43,12 @@ const typeDefs = gql`
   type Query {
     hello: String
     login(email: String!, password: String!): AuthPayload
+    getCurrentUser: TeacherUser
   }
 
   type Mutation {
     signup(teacherUserInput: TeacherUserInput): AuthPayload
+    createClassroom(classroomInput: ClassroomInput): Classroom
   }
 `;
 

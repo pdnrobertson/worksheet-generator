@@ -12,7 +12,7 @@ const ClassroomSchema = new Schema({
   },
   subject: {
     type: String,
-    required: true
+    required: false
   },
   teacher: {
     type: Schema.Types.ObjectId,
