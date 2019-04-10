@@ -5,10 +5,13 @@ const jwt = require("jsonwebtoken");
 const authQueries = {
   getCurrentUser: async (_, args, context) => {
     const user = context.user;
-    if (!context.user) {
+    if (!user) {
       throw new Error("Unauthenticated.");
     }
-    return user.id;
+
+    const currentUser = await TeacherUser.findById(user.id);
+
+    return currentUser._doc;
   },
 
   login: async (_, args) => {
