@@ -59,11 +59,10 @@ class Login extends Component {
 
       if (token) {
         this.context.login(token, userId);
+        localStorage.setItem("token", token);
       } else {
         throw new Error("User token not found.");
       }
-
-      this.setState({ redirectToDashboard: true });
 
       return;
     } catch (err) {

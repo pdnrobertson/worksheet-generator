@@ -23,7 +23,7 @@ app.use(
   })
 );
 
-// Create Apollo Server with schema, resolvers and context
+// Create Apollo Server with schema, resasddolvers and context
 const server = new ApolloServer({
   typeDefs,
   resolvers,

@@ -19,6 +19,14 @@ const ClassroomSchema = new Schema({
     ref: "Teacher",
     required: true
   },
+
+  students: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Student"
+    }
+  ],
+
   numOfStudents: {
     type: Number,
     required: true

@@ -27,12 +27,25 @@ const typeDefs = gql`
     year_level: String!
     subject: String
     teacher: TeacherUser!
+    students: [Student!]
     numOfStudents: Int!
   }
 
   input ClassroomInput {
     name: String!
     year_level: String!
+  }
+
+  type Student {
+    _id: ID!
+    firstName: String!
+    lastName: String!
+    classroom: Classroom!
+  }
+
+  input StudentInput {
+    firstName: String!
+    lastName: String!
   }
 
   type AuthPayload {
@@ -48,6 +61,7 @@ const typeDefs = gql`
   type Mutation {
     signup(signupInput: TeacherUserInput): AuthPayload
     createClassroom(classroomInput: ClassroomInput): Classroom
+    createStudent(studentInput: StudentInput): Student
   }
 `;
 

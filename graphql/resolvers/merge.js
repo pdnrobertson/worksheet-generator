@@ -23,7 +23,7 @@ const singleTeacher = async teacherId => {
     const singleTeacher = await TeacherUser.findById(teacherId);
 
     return {
-      ...teacherUser._doc,
+      ...singleTeacher._doc,
       classrooms: classrooms.bind(this, singleTeacher._doc.classrooms)
     };
   } catch (err) {
