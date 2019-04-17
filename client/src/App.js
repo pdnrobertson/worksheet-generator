@@ -13,6 +13,7 @@ import {
 
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
+import Navbar from "./components/Navbar";
 import AuthContext from "./context/auth-context";
 
 const httpLink = createHttpLink({
@@ -38,29 +39,41 @@ class App extends Component {
   };
 
   logout = () => {
+    console.log("Logging out");
     this.setState({ token: null, userId: null });
   };
 
   render() {
     return (
       <ApolloProvider client={client}>
-        <AuthContext.Provider
-          value={{
-            token: this.state.token,
-            userId: this.state.userId,
-            login: this.login,
-            logout: this.logout
-          }}
-        >
-          <Router>
-            <Fragment>
-              <div className="container">
-                <Route path="/auth" component={Auth} />
-                <Route path="/dashboard" component={Dashboard} />
-              </div>
-            </Fragment>
-          </Router>
-        </AuthContext.Provider>
+        <Router>
+          <AuthContext.Provider
+            value={{
+              token: this.state.token,
+              userId: this.state.userId,
+              login: this.login,
+              logout: this.logout
+            }}
+          >
+            <Navbar />
+            <br />
+            <div className="container">
+              <Switch>
+                {this.state.token && (
+                  <Redirect exact path="/" to="/dashboard" />
+                )}
+                {this.state.token && (
+                  <Route path="/dashboard" component={Dashboard} />
+                )}
+                {this.state.token && (
+                  <Redirect exact path="/auth" to="/dashboard" />
+                )}
+                {!this.state.token && <Route path="/auth" component={Auth} />}
+                {!this.state.token && <Redirect exact to="/auth" />}
+              </Switch>
+            </div>
+          </AuthContext.Provider>
+        </Router>
       </ApolloProvider>
     );
   }
