@@ -1,5 +1,6 @@
 const Classroom = require("../../models/Classroom");
 const TeacherUser = require("../../models/TeacherUser");
+const Student = require("../../models/Student");
 
 // const mongoose = require("mongoose");
 
@@ -11,6 +12,34 @@ const classrooms = async classroomIds => {
       return {
         ...classroom._doc,
         teacher: singleTeacher.bind(this, classroom.teacher)
+      };
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+
+const singleClassroom = async classroomId => {
+  try {
+    const singleClassroom = await Classroom.findById(classroomId);
+
+    return {
+      ...singleClassroom._doc,
+      students: students.bind(this, singleClassroom._doc.students)
+    };
+  } catch (err) {
+    throw err;
+  }
+};
+
+const students = async studentIds => {
+  try {
+    const students = await Student.find({ _id: { $in: studentIds } });
+
+    return students.map(student => {
+      return {
+        ...student._doc,
+        classroom: singleClassroom.bind(this, student.classroom)
       };
     });
   } catch (err) {
@@ -31,5 +60,7 @@ const singleTeacher = async teacherId => {
   }
 };
 
+exports.students = students;
+exports.singleClassroom = singleClassroom;
 exports.classrooms = classrooms;
 exports.singleTeacher = singleTeacher;

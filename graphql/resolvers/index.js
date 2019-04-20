@@ -3,17 +3,20 @@ const {
   classroomQueries,
   classroomMutations
 } = require("./classroomResolvers");
+const { studentQueries, studentMutations } = require("./studentResolvers");
 
 // GraphQL Resolvers
 const resolvers = {
   Query: {
     ...authQueries,
-    ...classroomQueries
+    ...classroomQueries,
+    ...studentQueries
   },
 
   Mutation: {
     ...authMutations,
-    ...classroomMutations
+    ...classroomMutations,
+    ...studentMutations
   }
 };
 

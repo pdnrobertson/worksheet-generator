@@ -14,11 +14,12 @@ import {
 
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
+import Classroom from "./pages/Classroom";
 import Navbar from "./components/Navbar";
 import AuthContext from "./context/auth-context";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/graphql"
+  uri: "http://localhost:5000/graphql"
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -74,6 +75,9 @@ class App extends Component {
                 )}
                 {this.state.token && (
                   <Route path="/dashboard" component={Dashboard} />
+                )}
+                {this.state.token && (
+                  <Route path="/classroom/:id" component={Classroom} />
                 )}
                 {this.state.token && (
                   <Redirect exact path="/auth" to="/dashboard" />

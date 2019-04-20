@@ -46,6 +46,7 @@ const typeDefs = gql`
   input StudentInput {
     firstName: String!
     lastName: String!
+    classroomId: String!
   }
 
   type AuthPayload {
@@ -56,11 +57,14 @@ const typeDefs = gql`
   type Query {
     login(email: String!, password: String!): AuthPayload
     getCurrentUser: TeacherUser
+    getStudentInfo(studentId: String!): Student
+    getClassroom(classroomId: String!): Classroom
   }
 
   type Mutation {
     signup(signupInput: TeacherUserInput): AuthPayload
     createClassroom(classroomInput: ClassroomInput): Classroom
+    deleteClassroom(classroomId: String): String
     createStudent(studentInput: StudentInput): Student
   }
 `;

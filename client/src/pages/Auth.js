@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import Login from "../components/Login";
-import SignUp from "../components/SignUp";
+import Login from "../components/auth/Login";
+import SignUp from "../components/auth/SignUp";
 
 export class Auth extends Component {
   constructor(props) {
