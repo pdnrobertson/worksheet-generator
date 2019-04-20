@@ -11,6 +11,7 @@ const typeDefs = gql`
     country: String
     password: String!
     classrooms: [Classroom!]
+    createdWorksheets: [Worksheet!]
   }
 
   input TeacherUserInput {
@@ -49,6 +50,21 @@ const typeDefs = gql`
     classroomId: String!
   }
 
+  scalar Date
+
+  type Worksheet {
+    _id: ID!
+    title: String!
+    creator: TeacherUser!
+    dateCreated: Date!
+    classroomsAssigned: [Classroom!]
+  }
+
+  input WorksheetInput {
+    title: String!
+    creatorId: String!
+  }
+
   type AuthPayload {
     token: String
     userId: String
@@ -66,6 +82,8 @@ const typeDefs = gql`
     createClassroom(classroomInput: ClassroomInput): Classroom
     deleteClassroom(classroomId: String): String
     createStudent(studentInput: StudentInput): Student
+    deleteStudent(studentId: String, classroomId: String): String
+    createWorksheet(worksheetInput: WorksheetInput): Worksheet
   }
 `;
 

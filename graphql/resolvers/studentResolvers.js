@@ -1,5 +1,6 @@
 const Student = require("../../models/Student");
 const Classroom = require("../../models/Classroom");
+const TeacherUser = require("../../models/TeacherUser");
 const { singleClassroom } = require("./merge");
 
 const studentQueries = {
@@ -58,6 +59,36 @@ const studentMutations = {
 
       // Return the created student
       return createdStudent;
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  deleteStudent: async (_, args, context) => {
+    // if (!context.user) {
+    //   throw new Error("Unauthenticated.");
+    // }
+
+    try {
+      // Find corresponding student
+      const student = await Student.findById(args.studentId);
+      const classroom = await Classroom.findById(args.classroomId);
+
+      // Check to see if authorized to delete student
+      // if (context.user.id !== classroom._doc.teacher.toString()) {
+      //   throw new Error("Not authorised to make changes to the student.");
+      // }
+
+      // Remove student from array
+      classroom.students = classroom.students.filter(
+        keepStudent => keepStudent._id !== student._doc._id
+      );
+
+      await classroom.save();
+
+      // Remove the student
+      await student.remove();
+      return "Student removed.";
     } catch (err) {
       throw err;
     }

@@ -5,6 +5,7 @@ import DeleteClassroom from "../components/classroom/DeleteClassroom";
 import ClassroomProfile from "../components/classroom/ClassroomProfile";
 import Spinner from "react-spinkit";
 import AddStudentsModal from "../components/classroom/AddStudentsModal";
+import StudentList from "../components/classroom/StudentList";
 
 export class Classroom extends Component {
   constructor(props) {
@@ -71,22 +72,7 @@ export class Classroom extends Component {
                   onHide={this.handleClose}
                   classroomId={_id}
                 />
-                <table className="table table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col">First Name</th>
-                      <th scope="col">Last Name</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {students.map(student => (
-                      <tr key={student._id}>
-                        <th>{student.firstName}</th>
-                        <td>{student.lastName}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <StudentList students={students} classroomId={_id} />
               </div>
               <DeleteClassroom
                 redirectToDashboard={this.state.redirectToDashboard}

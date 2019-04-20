@@ -44,6 +44,7 @@ export const GET_CLASSROOM = gql`
         lastName
       }
       students {
+        _id
         firstName
         lastName
       }
@@ -58,5 +59,11 @@ export const CREATE_STUDENT = gql`
       firstName
       lastName
     }
+  }
+`;
+
+export const DELETE_STUDENT = gql`
+  mutation DeleteStudent($studentId: String!, $classroomId: String!) {
+    deleteStudent(studentId: $studentId, classroomId: $classroomId)
   }
 `;

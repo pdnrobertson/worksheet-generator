@@ -1,6 +1,7 @@
 const Classroom = require("../../models/Classroom");
 const TeacherUser = require("../../models/TeacherUser");
 const Student = require("../../models/Student");
+const Worksheet = require("../../models/Worksheet");
 
 // const mongoose = require("mongoose");
 
@@ -47,13 +48,29 @@ const students = async studentIds => {
   }
 };
 
+const worksheets = async worksheetIds => {
+  try {
+    const worksheets = await Worksheet.find({ _id: { $in: worksheetIds } });
+
+    return worksheets.map(worksheet => {
+      return {
+        ...worksheet._doc,
+        creator: singleTeacher.bind(this, worksheet.creator)
+      };
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+
 const singleTeacher = async teacherId => {
   try {
     const singleTeacher = await TeacherUser.findById(teacherId);
 
     return {
       ...singleTeacher._doc,
-      classrooms: classrooms.bind(this, singleTeacher._doc.classrooms)
+      classrooms: classrooms.bind(this, singleTeacher._doc.classrooms),
+      worksheets: worksheets.bind(this, singleTeacher._doc.worksheets)
     };
   } catch (err) {
     throw err;

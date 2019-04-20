@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import Modal from "react-bootstrap/Modal";
 import { Mutation } from "react-apollo";
-import { CREATE_STUDENT } from "../../graphql-utils";
+import { CREATE_STUDENT, GET_CLASSROOM } from "../../graphql-utils";
 import AddStudentSummary from "./AddStudentSummary";
 
 export class AddStudentsModal extends Component {
@@ -28,7 +28,14 @@ export class AddStudentsModal extends Component {
               <Modal.Title>Add Students</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <Mutation mutation={CREATE_STUDENT}>
+              <Mutation
+                mutation={CREATE_STUDENT}
+                refetchQueries={() => [
+                  {
+                    query: GET_CLASSROOM
+                  }
+                ]}
+              >
                 {(createStudent, { loading, data, error }) => {
                   return (
                     <form

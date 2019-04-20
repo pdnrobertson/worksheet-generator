@@ -4,19 +4,28 @@ const {
   classroomMutations
 } = require("./classroomResolvers");
 const { studentQueries, studentMutations } = require("./studentResolvers");
+const {
+  worksheetQueries,
+  worksheetMutations
+} = require("./worksheetResolvers");
+const { GraphQLDate } = require("graphql-iso-date");
 
 // GraphQL Resolvers
 const resolvers = {
+  Date: GraphQLDate,
+
   Query: {
     ...authQueries,
     ...classroomQueries,
-    ...studentQueries
+    ...studentQueries,
+    ...worksheetQueries
   },
 
   Mutation: {
     ...authMutations,
     ...classroomMutations,
-    ...studentMutations
+    ...studentMutations,
+    ...worksheetMutations
   }
 };
 

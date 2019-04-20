@@ -4,6 +4,7 @@ import { GET_CURRENT_USER } from "../graphql-utils";
 import ClassroomSummary from "../components/dashboard/ClassroomSummary";
 import ProfileSummary from "../components/dashboard/ProfileSummary";
 import CreateClassroomModal from "../components/dashboard/CreateClassroomModal";
+import Spinner from "react-spinkit";
 
 export class Dashboard extends Component {
   constructor(props, context) {
@@ -27,7 +28,7 @@ export class Dashboard extends Component {
       <div>
         <Query query={GET_CURRENT_USER}>
           {({ loading, error, data, refetch }) => {
-            if (loading) return "Loading...";
+            if (loading) return <Spinner name="rotating-plane" />;
             if (error) throw new Error(`Error! ${error}`);
             const {
               firstName,
