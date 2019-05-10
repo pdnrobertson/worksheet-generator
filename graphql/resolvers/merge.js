@@ -12,7 +12,8 @@ const classrooms = async classroomIds => {
     return classrooms.map(classroom => {
       return {
         ...classroom._doc,
-        teacher: singleTeacher.bind(this, classroom.teacher)
+        teacher: singleTeacher.bind(this, classroom.teacher),
+        assignedWorksheets: worksheets.bind(this, classroom.assignedWorksheets)
       };
     });
   } catch (err) {
@@ -26,7 +27,11 @@ const singleClassroom = async classroomId => {
 
     return {
       ...singleClassroom._doc,
-      students: students.bind(this, singleClassroom._doc.students)
+      students: students.bind(this, singleClassroom._doc.students),
+      assignedWorksheets: worksheets.bind(
+        this,
+        singleClassroom._doc.assignedWorksheets
+      )
     };
   } catch (err) {
     throw err;
@@ -55,7 +60,8 @@ const worksheets = async worksheetIds => {
     return worksheets.map(worksheet => {
       return {
         ...worksheet._doc,
-        creator: singleTeacher.bind(this, worksheet.creator)
+        creator: singleTeacher.bind(this, worksheet.creator),
+        assignedClassrooms: classrooms.bind(this, worksheet.assignedClassrooms)
       };
     });
   } catch (err) {
@@ -77,6 +83,7 @@ const singleTeacher = async teacherId => {
   }
 };
 
+exports.worksheets = worksheets;
 exports.students = students;
 exports.singleClassroom = singleClassroom;
 exports.classrooms = classrooms;
