@@ -65,23 +65,31 @@ const studentMutations = {
   },
 
   deleteStudent: async (_, args, context) => {
-    // if (!context.user) {
-    //   throw new Error("Unauthenticated.");
-    // }
+    if (!context.user) {
+      throw new Error("Unauthenticated.");
+    }
 
     try {
       // Find corresponding student
       const student = await Student.findById(args.studentId);
       const classroom = await Classroom.findById(args.classroomId);
 
+      if (!student) {
+        throw new Error("Student not found.");
+      }
+
+      if (!classroom) {
+        throw new Error("Classroom not found.");
+      }
+
       // Check to see if authorized to delete student
-      // if (context.user.id !== classroom._doc.teacher.toString()) {
-      //   throw new Error("Not authorised to make changes to the student.");
-      // }
+      if (context.user.id !== classroom._doc.teacher.toString()) {
+        throw new Error("Not authorised to make changes to the student.");
+      }
 
       // Remove student from array
       classroom.students = classroom.students.filter(
-        keepStudent => keepStudent._id !== student._doc._id
+        keepStudent => keepStudent._id.toString() !== args.studentId
       );
 
       await classroom.save();

@@ -30,6 +30,7 @@ const typeDefs = gql`
     teacher: TeacherUser!
     students: [Student!]
     numOfStudents: Int!
+    assignedWorksheets: [Worksheet!]
   }
 
   input ClassroomInput {
@@ -84,6 +85,7 @@ const typeDefs = gql`
     createStudent(studentInput: StudentInput): Student
     deleteStudent(studentId: String, classroomId: String): String
     createWorksheet(worksheetInput: WorksheetInput): Worksheet
+    deleteWorksheet(worksheetId: String): String
   }
 `;
 
