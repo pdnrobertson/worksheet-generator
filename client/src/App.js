@@ -1,7 +1,8 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { ApolloClient } from "apollo-boost";
 import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { setContext } from "apollo-link-context";
 import { ApolloProvider } from "react-apollo";
 
 import {
@@ -13,18 +14,28 @@ import {
 
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
+import Classroom from "./pages/Classroom";
 import Navbar from "./components/Navbar";
 import AuthContext from "./context/auth-context";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/graphql"
+  uri: "http://localhost:5000/graphql"
 });
 
-const cache = new InMemoryCache();
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("token");
+
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : ""
+    }
+  };
+});
 
 const client = new ApolloClient({
-  link: httpLink,
-  cache
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
 });
 
 class App extends Component {
@@ -64,6 +75,9 @@ class App extends Component {
                 )}
                 {this.state.token && (
                   <Route path="/dashboard" component={Dashboard} />
+                )}
+                {this.state.token && (
+                  <Route path="/classroom/:id" component={Classroom} />
                 )}
                 {this.state.token && (
                   <Redirect exact path="/auth" to="/dashboard" />

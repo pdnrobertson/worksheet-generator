@@ -38,6 +38,13 @@ const TeacherUserSchema = new Schema({
       type: Schema.Types.Object,
       ref: "Classroom"
     }
+  ],
+
+  createdWorksheets: [
+    {
+      type: Schema.Types.Object,
+      ref: "Worksheet"
+    }
   ]
 });
 

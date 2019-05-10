@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import authContext from "../context/auth-context";
+import authContext from "../../context/auth-context";
 
 class Login extends Component {
   constructor(props) {
@@ -42,7 +42,7 @@ class Login extends Component {
     this.passwordEl.current.value = "";
 
     try {
-      const response = await fetch("http://localhost:4000/graphql", {
+      const response = await fetch("http://localhost:5000/graphql", {
         method: "POST",
         body: JSON.stringify(requestBody),
         headers: {
@@ -59,11 +59,10 @@ class Login extends Component {
 
       if (token) {
         this.context.login(token, userId);
+        localStorage.setItem("token", token);
       } else {
         throw new Error("User token not found.");
       }
-
-      this.setState({ redirectToDashboard: true });
 
       return;
     } catch (err) {
